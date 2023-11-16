@@ -10,8 +10,7 @@ class HomeViewModel extends GetxController {
   final ValueNotifier<bool> _loading = ValueNotifier(false);
 
   List<CategoryModel> get categoryModel => _categoryModel;
-  List<CategoryModel> _categoryModel = [];
-
+  final List<CategoryModel> _categoryModel = [];
   List<ProductModel> get productModel => _productModel;
   final List<ProductModel> _productModel = [];
 

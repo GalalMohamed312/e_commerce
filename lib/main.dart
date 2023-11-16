@@ -17,16 +17,18 @@ void main() async {
     ),
   );
   // await Firebase.initializeApp();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: Binding(),
-      home: Scaffold(
+      home: const Scaffold(
         body: ControlView(),
       ),
       theme: ThemeData(

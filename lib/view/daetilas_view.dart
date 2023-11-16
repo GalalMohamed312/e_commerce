@@ -7,9 +7,9 @@ import '../model/constance.dart';
 import '../model/product_model.dart';
 
 class DetailsView extends StatelessWidget {
-  ProductModel? model;
+  final ProductModel? model;
 
-  DetailsView({super.key, this.model});
+  const DetailsView({super.key, this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -24,27 +24,27 @@ class DetailsView extends StatelessWidget {
               fit: BoxFit.fill,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                padding: EdgeInsets.all(18),
+                padding: const EdgeInsets.all(18),
                 child: Column(
                   children: [
                     CustomText(
                       text: model!.name!,
                       fontSize: 26,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           width: MediaQuery.of(context).size.width * .4,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
@@ -54,7 +54,7 @@ class DetailsView extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              CustomText(
+                              const CustomText(
                                 text: 'Size',
                               ),
                               CustomText(
@@ -64,7 +64,7 @@ class DetailsView extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           width: MediaQuery.of(context).size.width * .44,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
@@ -74,13 +74,13 @@ class DetailsView extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              CustomText(
+                              const CustomText(
                                 text: 'Color',
                               ),
                               Container(
                                 width: 30,
                                 height: 20,
-                                padding: EdgeInsets.all(12),
+                                padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(20),
@@ -92,14 +92,14 @@ class DetailsView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
-                    CustomText(
+                    const CustomText(
                       text: 'Details',
                       fontSize: 18,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     CustomText(
@@ -119,7 +119,7 @@ class DetailsView extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    CustomText(
+                    const CustomText(
                       text: "PRICE ",
                       fontSize: 22,
                       color: Colors.grey,
@@ -132,7 +132,7 @@ class DetailsView extends StatelessWidget {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   width: 180,
                   height: 100,
                   child: CustomButton(
