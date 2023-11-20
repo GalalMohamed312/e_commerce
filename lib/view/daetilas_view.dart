@@ -18,7 +18,7 @@ class DetailsView extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: 270,
+            height: 200,
             child: Image.network(
               model!.image!,
               fit: BoxFit.fill,
@@ -30,7 +30,7 @@ class DetailsView extends StatelessWidget {
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.all(18),
+                padding: const EdgeInsets.all(20),
                 child: Column(
                   children: [
                     CustomText(
@@ -41,7 +41,7 @@ class DetailsView extends StatelessWidget {
                       height: 15,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
                           padding: const EdgeInsets.all(16),
@@ -65,7 +65,7 @@ class DetailsView extends StatelessWidget {
                         ),
                         Container(
                           padding: const EdgeInsets.all(16),
-                          width: MediaQuery.of(context).size.width * .44,
+                          width: MediaQuery.of(context).size.width * .4,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               border: Border.all(
@@ -84,7 +84,7 @@ class DetailsView extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   border: Border.all(color: Colors.grey),
                                   borderRadius: BorderRadius.circular(20),
-                                  color: model!.color,
+                                  color: Colors.red,
                                 ),
                               )
                             ],
@@ -100,20 +100,35 @@ class DetailsView extends StatelessWidget {
                       fontSize: 18,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 15,
                     ),
                     CustomText(
                       text: model!.description!,
                       fontSize: 18,
-                      height: 2.5,
-                    )
+                      color: Colors.grey.shade400,
+                    ),
+                    CustomText(
+                      text: model!.description!,
+                      fontSize: 18,
+                      color: Colors.grey.shade400,
+                    ),
+                    CustomText(
+                      text: model!.description!,
+                      fontSize: 18,
+                      color: Colors.grey.shade400,
+                    ),
+                    CustomText(
+                      text: model!.description!,
+                      fontSize: 18,
+                      color: Colors.grey.shade400,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.only(left: 30,right: 30,bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -124,6 +139,7 @@ class DetailsView extends StatelessWidget {
                       fontSize: 22,
                       color: Colors.grey,
                     ),
+                    const SizedBox(height: 10,),
                     CustomText(
                       text: ' \$${model!.price!}',
                       color: primaryColor,
@@ -134,7 +150,7 @@ class DetailsView extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: 180,
-                  height: 100,
+                  height: 90,
                   child: CustomButton(
                     onPress: () {},
                     text: 'Add',

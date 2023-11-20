@@ -23,7 +23,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomeViewModel>(
-      init: Get.find(),
+      init: Get.find<HomeViewModel>(),
       builder: (controller) => controller.loading.value
           ? const Center(child: CircularProgressIndicator())
           : Scaffold(
@@ -40,7 +40,7 @@ class HomeView extends StatelessWidget {
                         text: "Categories",
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       _listViewCategory(),
                       const SizedBox(
@@ -60,7 +60,7 @@ class HomeView extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(
-                        height: 30,
+                        height: 20,
                       ),
                       _listViewProducts(),
                     ],
@@ -131,7 +131,7 @@ class HomeView extends StatelessWidget {
   Widget _listViewProducts() {
     return GetBuilder<HomeViewModel>(
       builder: (controller) => SizedBox(
-        height: 350,
+        height: 300,
         child: ListView.separated(
           itemCount: controller.productModel.length,
           scrollDirection: Axis.horizontal,
@@ -144,47 +144,50 @@ class HomeView extends StatelessWidget {
               },
               child: SizedBox(
                 width: MediaQuery.of(context).size.width * .4,
-                child: Column(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        color: Colors.grey.shade100,
-                      ),
-                      child: SizedBox(
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.grey.shade100,
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
                           height: 220,
                           width: MediaQuery.of(context).size.width * .4,
-                          child: Image.network(
-                            controller.productModel[index].image!,
-                            fit: BoxFit.fill,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: Image.network(
+                              controller.productModel[index].image!,
+                              fit: BoxFit.fill,
+                            ),
                           )),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CustomText(
-                      text: controller.productModel[index].name!,
-                      alignment: Alignment.bottomLeft,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Expanded(
-                      child: CustomText(
-                        text: controller.productModel[index].description!,
-                        color: Colors.grey,
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomText(
+                        text: controller.productModel[index].name!,
                         alignment: Alignment.bottomLeft,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    CustomText(
-                      text: "${controller.productModel[index].price} \$",
-                      color: primaryColor,
-                      alignment: Alignment.bottomLeft,
-                    ),
-                  ],
+                      const SizedBox(
+                        height: 0,
+                      ),
+                      Expanded(
+                        child: CustomText(
+                          text: controller.productModel[index].description!,
+                          color: Colors.grey,
+                          alignment: Alignment.bottomLeft,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomText(
+                        text: "${controller.productModel[index].price} \$",
+                        color: primaryColor,
+                        alignment: Alignment.bottomLeft,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
