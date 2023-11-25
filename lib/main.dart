@@ -1,3 +1,4 @@
+import 'package:ecommerce/core/view_model/home_view_model.dart';
 import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ void main() async {
       projectId: "e-comeerce-app",
     ),
   );
+  Get.put(HomeViewModel());
   // await Firebase.initializeApp();
   runApp(const MyApp());
 }

@@ -1,7 +1,10 @@
 
+import 'package:ecommerce/core/view_model/cart_view_model.dart';
+import 'package:ecommerce/model/cart_product_model.dart';
 import 'package:ecommerce/view/widgets/custom_buttom.dart';
 import 'package:ecommerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../model/constance.dart';
 import '../model/product_model.dart';
@@ -107,28 +110,13 @@ class DetailsView extends StatelessWidget {
                       fontSize: 18,
                       color: Colors.grey.shade400,
                     ),
-                    CustomText(
-                      text: model!.description!,
-                      fontSize: 18,
-                      color: Colors.grey.shade400,
-                    ),
-                    CustomText(
-                      text: model!.description!,
-                      fontSize: 18,
-                      color: Colors.grey.shade400,
-                    ),
-                    CustomText(
-                      text: model!.description!,
-                      fontSize: 18,
-                      color: Colors.grey.shade400,
-                    ),
                   ],
                 ),
               ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 30,right: 30,bottom: 30),
+            padding: const EdgeInsets.only(left: 30,right: 10,bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -147,13 +135,28 @@ class DetailsView extends StatelessWidget {
                     )
                   ],
                 ),
-                Container(
-                  padding: const EdgeInsets.all(20),
-                  width: 180,
-                  height: 90,
-                  child: CustomButton(
-                    onPress: () {},
-                    text: 'Add',
+                GetBuilder<CartViewModel>(
+                  init: CartViewModel(),
+                  builder: (controller) => Container(
+                    padding: const EdgeInsets.all(20),
+                    width: 180,
+                    height: 90,
+                    child: CustomButton(
+                      onPress: () {
+                        controller.addProductToCart(
+                          CartProductModel(
+                            name: model!.name,
+                            image: model!.image,
+                            price: model!.price,
+                            quantity: 1,
+                            id: model!.id,
+                          ),
+                        );
+                        print("id=======${model!.id}");
+                        print("model=======${model}");
+                      },
+                      text: 'Add',
+                    ),
                   ),
                 ),
               ],

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../core/view_model/home_view_model.dart';
 import '../model/constance.dart';
-import 'daetilas_view.dart';
+import 'details_view.dart';
 
 class HomeView extends StatelessWidget {
   final List<String> names = <String>[
@@ -25,7 +25,7 @@ class HomeView extends StatelessWidget {
     return GetBuilder<HomeViewModel>(
       init: Get.find<HomeViewModel>(),
       builder: (controller) => controller.loading.value
-          ? const Center(child: CircularProgressIndicator())
+          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
           : Scaffold(
               body: SingleChildScrollView(
                 child: Container(
