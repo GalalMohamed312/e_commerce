@@ -1,4 +1,5 @@
 
+import 'package:ecommerce/core/service/local_database/local_storage_shared_prefs.dart';
 import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class AuthViewModel extends GetxController {
   final Rx<User?> _user = Rx<User?>(null);
 
   String? get user => _user.value?.email;
+  final LocalStorageData localStorageData=Get.find<LocalStorageData>();
 
   @override
   void onInit() {
@@ -69,7 +71,11 @@ class AuthViewModel extends GetxController {
 
   void signInWithEmailAndPassword() async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email!, password: password!);
+      await _auth.signInWithEmailAndPassword(email: email!, password: password!).then((value)async{
+        await FireStoreUser().getUserFromFireStore(value.user!.uid).then((value){
+           setUser(UserModel.fromJson(value.data() as Map));
+        });
+      });
       Get.offAll(const ControlView());
     } catch (e) {
       print(e.toString());
@@ -103,11 +109,16 @@ class AuthViewModel extends GetxController {
   }
 
   void saveUser(UserCredential user) async {
-    await FireStoreUser().addUserToFireStore(UserModel(
+    UserModel userModel =UserModel(
       userId: user.user!.uid,
       email: user.user?.email,
       name: name ?? user.user!.displayName,
       pic: '',
-    ));
+    );
+    await FireStoreUser().addUserToFireStore(userModel);
+    setUser(userModel);
+  }
+  void setUser(UserModel userModel)async{
+    await localStorageData.setUserData(userModel);
   }
 }

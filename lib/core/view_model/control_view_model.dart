@@ -28,7 +28,7 @@ class ControlViewModel extends GetxController {
         }
       case 2:
         {
-          currentScreen = const ProfileView();
+          currentScreen =  ProfileView();
           break;
         }
     }
