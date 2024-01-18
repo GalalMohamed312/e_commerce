@@ -1,7 +1,9 @@
+import 'package:ecommerce/core/utils/assets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../model/category_model.dart';
+import '../../model/models.dart';
 import '../../model/product_model.dart';
 import '../service/home_services.dart';
 
@@ -10,12 +12,21 @@ class HomeViewModel extends GetxController {
   final ValueNotifier<bool> _loading = ValueNotifier(false);
 
   List<CategoryModel> get categoryModel => _categoryModel;
-  final List<CategoryModel> _categoryModel = [];
+  final List<CategoryModel> _categoryModel = [
+    CategoryModel(name: "mobile", image: ImageAssets.smartphone),
+    CategoryModel(name: "laptop", image: ImageAssets.barchart),
+    CategoryModel(name: "tablet", image: ImageAssets.tablet),
+    CategoryModel(name: "television", image: ImageAssets.television),
+  ];
+
+
+
   List<ProductModel> get productModel => _productModel;
   final List<ProductModel> _productModel = [];
 
+
   HomeViewModel() {
-    getCategory();
+    // getCategory();
     getBestSellingProducts();
   }
 

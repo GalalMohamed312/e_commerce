@@ -1,18 +1,46 @@
-
+import 'package:ecommerce/core/utils/app_colors.dart';
+import 'package:ecommerce/core/utils/assets.dart';
+import 'package:ecommerce/core/utils/values_manager.dart';
 import 'package:ecommerce/core/view_model/cart_view_model.dart';
 import 'package:ecommerce/model/cart_product_model.dart';
 import 'package:ecommerce/view/widgets/custom_buttom.dart';
 import 'package:ecommerce/view/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
 import '../model/constance.dart';
+import '../model/models.dart';
 import '../model/product_model.dart';
 
 class DetailsView extends StatelessWidget {
-  final ProductModel? model;
+  final ProductModel model;
+  late final List<DeviceDetailsData> _mobileDetails;
 
-  const DetailsView({super.key, this.model});
+  DetailsView({Key? key, required this.model}) : super(key: key) {
+    _mobileDetails = [
+      DeviceDetailsData(
+          text: "Screen",
+          image: ImageAssets.smartPhoneIcon,
+          details: model.screen!),
+      DeviceDetailsData(
+          text: "Camera",
+          image: ImageAssets.camera,
+          details: model.camera!),
+      DeviceDetailsData(
+          text: "Storage/Ram",
+          image: ImageAssets.storage,
+          details: model.storage!),
+      DeviceDetailsData(
+          text: "Processor",
+          image: ImageAssets.processor,
+          details: model.processor!),
+      DeviceDetailsData(
+          text: "Battery",
+          image: ImageAssets.battery,
+          details: model.battery!),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,103 +48,56 @@ class DetailsView extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(
+            height: 24.h,
+          ),
+          //image
+          Container(
+            color: Colors.grey.shade100,
             width: MediaQuery.of(context).size.width,
-            height: 200,
+            height: 250,
+            padding: EdgeInsets.all(AppPadding.p16),
             child: Image.network(
-              model!.image!,
-              fit: BoxFit.fill,
+              model.images![0],
+              fit: BoxFit.contain,
             ),
           ),
-          const SizedBox(
-            height: 15,
-          ),
+          //mobile details
           Expanded(
             child: SingleChildScrollView(
               child: Container(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.all(AppPadding.p16),
                 child: Column(
                   children: [
                     CustomText(
-                      text: model!.name!,
-                      fontSize: 26,
+                      text: model.name!,
+                      fontSize: AppSize.s24,
+                      fontWeight: FontWeight.w700,
                     ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          width: MediaQuery.of(context).size.width * .4,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.grey,
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const CustomText(
-                                text: 'Size',
-                              ),
-                              CustomText(
-                                text: model!.sized!,
-                              ),
-                            ],
-                          ),
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          width: MediaQuery.of(context).size.width * .4,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.grey,
-                              )),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              const CustomText(
-                                text: 'Color',
-                              ),
-                              Container(
-                                width: 30,
-                                height: 20,
-                                padding: const EdgeInsets.all(12),
-                                decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.grey),
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: Colors.red,
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    const CustomText(
-                      text: 'Details',
-                      fontSize: 18,
-                    ),
-                    const SizedBox(
-                      height: 15,
+
+                    SizedBox(
+                      height: 24.h,
                     ),
                     CustomText(
-                      text: model!.description!,
-                      fontSize: 18,
-                      color: Colors.grey.shade400,
+                      text: 'Details',
+                      fontSize: AppSize.s16,
                     ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) =>
+                            cardDetails(cardDetailsData: _mobileDetails[index]),
+                        separatorBuilder: (context, index) => SizedBox(
+                              height: 16.h,
+                            ),
+                        itemCount: _mobileDetails.length)
                   ],
                 ),
               ),
             ),
           ),
+          //checkout
           Padding(
-            padding: const EdgeInsets.only(left: 30,right: 10,bottom: 30),
+            padding: const EdgeInsets.only(left: 30, right: 10, bottom: 30),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -127,9 +108,11 @@ class DetailsView extends StatelessWidget {
                       fontSize: 22,
                       color: Colors.grey,
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     CustomText(
-                      text: ' \$${model!.price!}',
+                      text: ' \$${model.price!}',
                       color: primaryColor,
                       fontSize: 18,
                     )
@@ -145,15 +128,13 @@ class DetailsView extends StatelessWidget {
                       onPress: () {
                         controller.addProductToCart(
                           CartProductModel(
-                            name: model!.name,
-                            image: model!.image,
-                            price: model!.price,
+                            name: model.name,
+                            image: model.images![0],
+                            price: model.price!,
                             quantity: 1,
-                            id: model!.id,
+                            id: model.id,
                           ),
                         );
-                        print("id=======${model!.id}");
-                        print("model=======${model}");
                       },
                       text: 'Add',
                     ),
@@ -162,6 +143,47 @@ class DetailsView extends StatelessWidget {
               ],
             ),
           )
+        ],
+      ),
+    );
+  }
+
+  Widget cardDetails({required DeviceDetailsData cardDetailsData}) {
+    return Container(
+      height: 50.h,
+      // padding: EdgeInsets.all(AppPadding.p12),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12.r),
+          border: Border.all(
+            color: AppColors.gray,
+          )),
+      child: Row(
+        children: [
+          Container(
+              padding: EdgeInsets.all(8.sp),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.r),
+                    bottomLeft: Radius.circular(12.r)),
+                color: primaryColor,
+              ),
+              child: Image.asset(
+                cardDetailsData.image,
+                color: AppColors.white,
+              )),
+          SizedBox(width: 16.w),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
+            child: CustomText(
+              text: "${cardDetailsData.text}: ",
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
+              child: CustomText(text: cardDetailsData.details, maxLine: 1),
+            ),
+          ),
         ],
       ),
     );

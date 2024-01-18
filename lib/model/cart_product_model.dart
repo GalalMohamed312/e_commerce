@@ -1,6 +1,6 @@
 class CartProductModel {
-  String? name, image, price,id;
-  int? quantity;
+  String? name, image,id;
+  int? quantity,price;
   // Color? color;
 
   CartProductModel(
@@ -17,8 +17,10 @@ class CartProductModel {
 
     name = map['name'];
     image = map['image'];
-    quantity = map['quantity'];
-    price = map['price'];
+    // quantity = map['quantity'];
+    // price = map['price'];
+    quantity = map['quantity']as int?;
+    price = map['price']as int?;
     id = map['id'];
   }
 

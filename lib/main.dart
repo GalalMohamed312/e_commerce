@@ -2,6 +2,8 @@ import 'package:ecommerce/core/view_model/home_view_model.dart';
 import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'helper/binding.dart';
@@ -27,15 +29,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialBinding: Binding(),
-      home: const Scaffold(
-        body: ControlView(),
-      ),
-      theme: ThemeData(
-        fontFamily: 'SourceSans',
-      ),
+    return ScreenUtilInit(
+      designSize: const Size(360, 690),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      // Use builder only if you need to use library outside ScreenUtilInit context
+      builder: (_, child) {
+        Color statusBarColor = Colors.white;
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          initialBinding: Binding(),
+          home: AnnotatedRegion<SystemUiOverlayStyle>(
+            value: SystemUiOverlayStyle(
+                statusBarColor: statusBarColor,
+                // Customize the status bar color
+                // statusBarBrightness: Brightness.dark,
+                statusBarIconBrightness:
+                    Brightness.dark // Customize the status bar brightness
+                ),
+            child: ControlView(),
+          ),
+          theme: ThemeData(
+            fontFamily: 'SourceSans',
+          ),
+        );
+      },
     );
   }
 }

@@ -1,19 +1,21 @@
-import 'package:flutter/cupertino.dart';
-
-import '../helper/extenstion.dart';
 
 class ProductModel {
-  String? name, image, description, sized, price,id;
-  // Color? color;
+  String? name,id,battery,color,processor,screen,storage,camera;
+  int? price;
+  List<dynamic>? images;
 
   ProductModel(
       {this.name,
-      this.image,
-      this.description,
+        this.images,
         this.id,
-      // this.color,
-      this.sized,
-      this.price});
+        this.color,
+        this.screen,
+        this.battery,
+        this.processor,
+        this.storage,
+        this.price,
+        this.camera,
+      });
 
   ProductModel.fromJson(Map<dynamic, dynamic> map) {
     if (map.isEmpty) {
@@ -21,21 +23,24 @@ class ProductModel {
     }
 
     name = map['name'];
-    image = map['image'];
-    description = map['description'];
-    // color = HexColor.fromHex(map['color']);
-    sized = map['sized'];
-    price = map['price'];
+    images = map['image'];
+    storage = map['storageAndRam'];
+    screen = map['screen'];
     id = map['id'];
+    processor = map['processor'];
+    battery = map['battery'];
+    price = map['price'];
+    color = map['color'];
+    camera = map['camera'];
   }
 
   toJson() {
     return {
       'name': name,
-      'image': image,
-      'description': description,
+      'image': images,
+      'description': battery,
       'id': id,
-      'sized': sized,
+      'sized': battery,
       'price': price,
     };
   }

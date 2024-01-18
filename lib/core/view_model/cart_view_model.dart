@@ -28,7 +28,7 @@ class CartViewModel extends GetxController {
     else{
       for(int i=0;i< _allProductModel.length;i++){
         if(_allProductModel[i].id==cartProductModel.id) {
-          print("id is =========}");
+          print("id is =========}${_allProductModel.length}");
           return;
         }
       }
@@ -37,7 +37,7 @@ class CartViewModel extends GetxController {
       _allProductModel.add(cartProductModel);
 
     }
-    _price+=(double.parse(cartProductModel.price!));
+    _price+=cartProductModel.price!;
 
     // print("adeed");
     update();
@@ -58,13 +58,13 @@ class CartViewModel extends GetxController {
   }
   getTotalPrice(){
     for(int i=0;i<_allProductModel.length;i++){
-      _price+=(double.parse(_allProductModel[i].price!)*_allProductModel[i].quantity!);
+      _price+=(_allProductModel[i].price!*_allProductModel[i].quantity!);
     }
     update();
   }
   increaseQuantity(int index){
     _allProductModel[index].quantity=(_allProductModel[index].quantity!+1);
-    _price+=(double.parse(_allProductModel[index].price!));
+    _price+=(_allProductModel[index].price!);
     _localDB.updateCartProduct(_allProductModel[index]);
     update();
   }
@@ -72,7 +72,7 @@ class CartViewModel extends GetxController {
     if(_allProductModel[index].quantity!>0)
     {
       _allProductModel[index].quantity=(_allProductModel[index].quantity!-1);
-      _price-=(double.parse(_allProductModel[index].price!));
+      _price-=_allProductModel[index].price!;
       _localDB.updateCartProduct(_allProductModel[index]);
       update();
     }

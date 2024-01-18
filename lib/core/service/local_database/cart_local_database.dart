@@ -37,7 +37,7 @@ class CartLocalDatabase {
            await db.execute('''
       CREATE TABLE $tableCartProduct (
       $columnName TEXT NOT NULL,
-      $columnPrice TEXT NOT NULL,
+      $columnPrice INTEGER NOT NULL,
       $columnImage TEXT NOT NULL,
       $columnQuantity INTEGER NOT NULL,
       $columnId TEXT NOT NULL)
@@ -62,11 +62,21 @@ class CartLocalDatabase {
 
   Future<List<CartProductModel>> getAllProducts() async {
     var dbClient = await database;
+    print("eeeeeeeee0000");
     try {
-      List<Map<String, dynamic>> value = await dbClient!.query(tableCartProduct);
+      print("eeeeeeeee11");
+      List<Map<dynamic, dynamic>> value = await dbClient!.query(tableCartProduct);
+      print("eeeeeeeee00111");
+      print(value[0]);
+     print(value[0]['name'].runtimeType);
+      print(value[0]['image'].runtimeType);
+      print(value[0]['price'].runtimeType);
+      print(value[0]['quantity'].runtimeType);
+      print(value[0]['id'].runtimeType);
       List<CartProductModel> allProducts = value.isNotEmpty
           ? value.map((product) => CartProductModel.fromJson(product)).toList()
           : [];
+      print("eeeeeeeee222");
       return allProducts;
     } catch (onError) {
       print("Error getting all records: $onError");

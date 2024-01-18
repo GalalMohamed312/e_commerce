@@ -1,9 +1,16 @@
+import 'package:ecommerce/core/utils/app_colors.dart';
+import 'package:ecommerce/core/utils/assets.dart';
+import 'package:ecommerce/core/utils/values_manager.dart';
 import 'package:ecommerce/core/view_model/cart_view_model.dart';
+import 'package:ecommerce/model/constance.dart';
 import 'package:ecommerce/view/widgets/custom_buttom.dart';
 import 'package:ecommerce/view/widgets/custom_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import 'Checkout/checkout.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
@@ -15,60 +22,77 @@ class CartView extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(top: true,left: false,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 20),
+          padding:  EdgeInsets.only(bottom: 20.h),
           child: GetBuilder<CartViewModel>(
             init: CartViewModel(),
-            builder:(controller)=> Column(
+            builder:(controller)=>controller.allProductModel.isEmpty?
+            Center(child: SvgPicture.asset(ImageAssets.emptyCart,height: 220.h,))
+                :
+            Column(
               children: [
+                SizedBox(height: 24.h,),
                 Expanded(
                   child: ListView.separated(
+                    physics: const BouncingScrollPhysics(),
                       itemBuilder: (context, index) {
                         return Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(
-                                height: 120,
+                                height: 120.h,
                                 width: MediaQuery.of(context).size.width*.35,
-                                child: Image.network(controller.allProductModel[index].image!,fit: BoxFit.fill),),
-                          const SizedBox(width: 30,),
+                                child: Image.network(controller.allProductModel[index].image!,fit: BoxFit.contain),),
+                          SizedBox(width: 30.w,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             // mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               CustomText(
                                 text:controller.allProductModel[index].name!,
-                                fontSize: 16.0,
+                                fontSize: AppSize.s16,
+                                fontWeight: FontWeight.w700,
                               ),
-                              const SizedBox(height: 10,),
+                              SizedBox(height: 12.h,),
                               CustomText(
-                                text:"\$ ${controller.allProductModel[index].price!}",
-                                fontSize: 12.0,
-                                color: Colors.green,
+                                text:"${controller.allProductModel[index].price!} EGP",
+                                fontSize: AppSize.s12,
+                                fontWeight: FontWeight.w700,
+                                color: primaryColor,
+
                               ),
-                              const SizedBox(height: 10,),
+                              SizedBox(height: 12.h,),
                               Container(
-                                height: 40,
-                                color: Colors.grey.shade200,
+                                height: 40.h,
+                                width: 100.w,
+                                decoration: BoxDecoration(
+                                  color: Colors.grey.shade100,
+                                  borderRadius: BorderRadius.circular(12.r)
+                                  
+                                ),
                                 child:  Row(
-                                  // mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    const SizedBox(width: 10,),
-                                    GestureDetector(
-                                        onTap:(){
-                                          controller.increaseQuantity(index);
-                                        },
-                                        child: const Icon(Icons.add)),
-                                    const SizedBox(width: 10,),
-                                     CustomText(
-                                      alignment: Alignment.center,
-                                      text: controller.allProductModel[index].quantity.toString(),
+                                    SizedBox(width: 8.h,),
+                                    Expanded(
+                                      child: GestureDetector(
+                                          onTap:(){
+                                            controller.increaseQuantity(index);
+                                          },
+                                          child: const Icon(Icons.add,),),
                                     ),
-                                    const SizedBox(width: 10,),
-                                    GestureDetector(
+                                    // SizedBox(width: 8.w,),
+                                     Expanded(
+                                       child: CustomText(
+                                        alignment: Alignment.center,
+                                        text: controller.allProductModel[index].quantity.toString(),
+                                    ),
+                                     ),
+                                    // SizedBox(width: 8.w,),
+                                    Expanded(
                                       child: Container(
-                                        alignment: Alignment.topLeft,
+                                        alignment: Alignment.topCenter,
                                         child: GestureDetector(
                                             onTap:(){
                                               controller.decreaseQuantity(index);
@@ -76,7 +100,7 @@ class CartView extends StatelessWidget {
                                             child: const Icon(Icons.minimize)),
                                       ),
                                     ),
-                                    const SizedBox(width: 10,),
+                                    SizedBox(width: 8.w,),
                                   ],
                                 ),
                               ),
@@ -86,27 +110,37 @@ class CartView extends StatelessWidget {
                         ],);
 
                       },
-                      separatorBuilder: (context, index) => const SizedBox(
-                            height: 10.0,
-                          ),
+                      separatorBuilder: (context, index) => Container(
+                        margin: EdgeInsets.all(AppPadding.p16),
+                        color: AppColors.gray,
+                        height: 1.h,
+                        width: double.infinity,
+                      ),
                       itemCount: controller.allProductModel.length),
                 ),
                 Container(
-                  padding: const EdgeInsets.only(left: 20.0,right: 20.0,top: 10),
+                  padding: EdgeInsets.only(left: 20.0.sp,right: 20.0.sp,top: 10.sp),
                   child:  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                        Column(
                         children: [
                           const CustomText(text: "TOTAL",),
-                          const SizedBox(height: 10,),
-                          CustomText(text: "\$ ${controller.price}",color: Colors.green,),
+                          SizedBox(height: 12.h,),
+                          Row(
+                            children: [
+                              CustomText(text: "${controller.price}",color: primaryColor,fontWeight: FontWeight.w700,fontSize: AppSize.s20,),
+                              const CustomText(text: " EGP",color: primaryColor,),
+                            ],
+                          ),
                         ],
                       ),
                       SizedBox(
-                        height: 50,
-                        width: 120,
-                        child: CustomButton(onPress: (){},
+                        height: 50.h,
+                        width: 120.w,
+                        child: CustomButton(onPress: (){
+                          Get.to(()=>const Checkout());
+                        },
                         color: Colors.green,
                           text: "CHECKOUT",
 
