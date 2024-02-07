@@ -25,9 +25,9 @@ class CartView extends StatelessWidget {
           padding:  EdgeInsets.only(bottom: 20.h),
           child: GetBuilder<CartViewModel>(
             init: CartViewModel(),
-            builder:(controller)=>controller.allProductModel.isEmpty?
-            Center(child: SvgPicture.asset(ImageAssets.emptyCart,height: 220.h,))
-                :
+            builder:(controller)=>
+            controller.loading.value?const CircularProgressIndicator():
+            controller.allProductModel.isNotEmpty?
             Column(
               children: [
                 SizedBox(height: 24.h,),
@@ -68,7 +68,7 @@ class CartView extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color: Colors.grey.shade100,
                                   borderRadius: BorderRadius.circular(12.r)
-                                  
+
                                 ),
                                 child:  Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -150,7 +150,8 @@ class CartView extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
+            ):
+            Center(child: SvgPicture.asset(ImageAssets.emptyCart,height: 220.h,))
           ),
         ),
       ),

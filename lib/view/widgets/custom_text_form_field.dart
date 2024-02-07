@@ -12,12 +12,13 @@ class CustomTextFormField extends StatelessWidget {
 
   final  onSave;
   final  validator;
-
-  const CustomTextFormField({super.key,
+  final TextEditingController? textEditingController;
+   const CustomTextFormField({super.key,
     this.text,
     this.hint,
     this.onSave,
     this.validator,
+  this.textEditingController
   });
 
   @override
@@ -32,6 +33,7 @@ class CustomTextFormField extends StatelessWidget {
         TextFormField(
           onSaved: onSave,
           validator: validator,
+          controller: textEditingController,
           onTapOutside: (event){
             FocusManager.instance.primaryFocus!.unfocus();
           },

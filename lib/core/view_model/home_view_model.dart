@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../model/category_model.dart';
+import '../../model/laptop_model.dart';
 import '../../model/models.dart';
 import '../../model/product_model.dart';
 import '../service/home_services.dart';
@@ -24,6 +25,8 @@ class HomeViewModel extends GetxController {
   List<ProductModel> get productModel => _productModel;
   final List<ProductModel> _productModel = [];
 
+  List<LaptopModel> get laptopModel => _laptopModel;
+  final List<LaptopModel> _laptopModel= [];
 
   HomeViewModel() {
     // getCategory();
@@ -45,11 +48,18 @@ class HomeViewModel extends GetxController {
     _loading.value = true;
     HomeService().getBestSelling().then((value) {
       for (int i = 0; i < value.length; i++) {
-        _productModel.add(ProductModel.fromJson(value[i].data()as Map<dynamic,dynamic>));
+        _productModel.add(
+            ProductModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
         _loading.value = false;
       }
-      print(_productModel.length);
-      update();
     });
-  }
+      HomeService().getLaptops().then((value) {
+        for (int i = 0; i < value.length; i++) {
+          _laptopModel.add(
+              LaptopModel.fromJson(value[i].data() as Map<dynamic, dynamic>));
+          _loading.value = false;
+        }
+      });
+        }
 }
+

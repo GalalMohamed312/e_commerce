@@ -16,13 +16,13 @@ abstract class ImageAssets {
  static const String camera="assets/images/icons/camera.png";
 
  static const String emptyCart="assets/images/svg/empty_cart.svg";
- static const String bookmarkIcon="assets/images/icons/bookmarkIcon.png";
-
  static const String user="assets/images/icons/user.png";
- static const String userIcon="assets/images/icons/userIcon.png";
 
- static const String category="assets/images/icons/category.png";
- static const String arrow="assets/images/icons/CaretRight.png";
+
+ static const String address="assets/images/icons/address.png";
+
+ static const String shoppingHistory="assets/images/icons/shoppingHistory.png";
+ static const String logout="assets/images/icons/logout.png";
  static const String profile="assets/images/icons/Profie.png";
  static const String menu="assets/images/svg/menu.svg";
  static const String star="assets/images/svg/star.svg";

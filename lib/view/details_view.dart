@@ -14,7 +14,7 @@ import '../model/models.dart';
 import '../model/product_model.dart';
 
 class DetailsView extends StatelessWidget {
-  final ProductModel model;
+  final  model;
   late final List<DeviceDetailsData> _mobileDetails;
 
   DetailsView({Key? key, required this.model}) : super(key: key) {
@@ -24,9 +24,9 @@ class DetailsView extends StatelessWidget {
           image: ImageAssets.smartPhoneIcon,
           details: model.screen!),
       DeviceDetailsData(
-          text: "Camera",
+          text: model.runtimeType==ProductModel?"Camera":"Graphic Card",
           image: ImageAssets.camera,
-          details: model.camera!),
+          details:  model.runtimeType==ProductModel?model.camera!:model.graphicsCard),
       DeviceDetailsData(
           text: "Storage/Ram",
           image: ImageAssets.storage,
@@ -64,6 +64,7 @@ class DetailsView extends StatelessWidget {
           //mobile details
           Expanded(
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Container(
                 padding: EdgeInsets.all(AppPadding.p16),
                 child: Column(
@@ -103,27 +104,36 @@ class DetailsView extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    const CustomText(
+                     CustomText(
                       text: "PRICE ",
-                      fontSize: 22,
+                      fontSize: AppSize.s24,
                       color: Colors.grey,
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 12.h,
                     ),
-                    CustomText(
-                      text: ' \$${model.price!}',
-                      color: primaryColor,
-                      fontSize: 18,
+                    Row(
+                      children: [
+                        CustomText(
+                          text: ' ${model.price!}',
+                          color: primaryColor,
+                          fontSize: AppSize.s16,
+                        ),
+                        CustomText(
+                          text: ' EGP',
+                          color: primaryColor,
+                          fontSize: AppSize.s12,
+                        ),
+                      ],
                     )
                   ],
                 ),
                 GetBuilder<CartViewModel>(
                   init: CartViewModel(),
                   builder: (controller) => Container(
-                    padding: const EdgeInsets.all(20),
-                    width: 180,
-                    height: 90,
+                    padding: EdgeInsets.all(20.sp),
+                    width: 180.w,
+                    height: 90.h,
                     child: CustomButton(
                       onPress: () {
                         controller.addProductToCart(
@@ -172,12 +182,12 @@ class DetailsView extends StatelessWidget {
                 color: AppColors.white,
               )),
           SizedBox(width: 16.w),
-          Padding(
-            padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
-            child: CustomText(
-              text: "${cardDetailsData.text}: ",
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(vertical: AppPadding.p16),
+          //   child: CustomText(
+          //     text: "${cardDetailsData.text}: ",
+          //   ),
+          // ),
           Expanded(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: AppPadding.p16),

@@ -66,7 +66,8 @@ class HomeView extends StatelessWidget {
                   ],
                 ),
 
-                _listViewProducts(context),
+                _listViewMobiles(context),
+                _listViewLaptops(context)
               ],
             ),
           ),
@@ -150,7 +151,7 @@ class HomeView extends StatelessWidget {
           ),
     );
   }
-  Widget _listViewProducts(context) {
+  Widget _listViewMobiles(context) {
     return GetBuilder<HomeViewModel>(
       builder: (controller) => GridView.count(
         shrinkWrap: true,
@@ -245,7 +246,101 @@ class HomeView extends StatelessWidget {
       ),
     );
   }
-
+  Widget _listViewLaptops(context) {
+    return GetBuilder<HomeViewModel>(
+      builder: (controller) => GridView.count(
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        childAspectRatio: .6,
+        crossAxisCount: 2,
+        children: List.generate(controller.laptopModel.length, (index) => GestureDetector(
+          onTap: () {
+            Get.to(DetailsView(
+              model: controller.laptopModel[index],
+            ));
+          },
+          child: Container(
+            // padding: EdgeInsets.symmetric(horizontal: AppPadding.p4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4.r),
+              border: Border.all(
+                color: Colors.grey.shade200,
+                width: 1.0.w,
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    // width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(AppPadding.p8),
+                    color: Colors.grey.shade100,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12.r),
+                      child: Image.network(
+                        controller.laptopModel[index].images![0],
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 8.sp,left: 8.sp),
+                  child: CustomText(
+                    text: controller.laptopModel[index].name!,
+                    alignment: Alignment.centerLeft,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 8.sp,left: 8.sp),
+                  child: CustomText(
+                    text: controller.laptopModel[index].storage!,
+                    color: Colors.grey,
+                    alignment: Alignment.centerLeft,
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(right: 8.sp,left: 8.sp),
+                      child: CustomText(
+                        text: "${controller.laptopModel[index].price}",
+                        color: primaryColor,
+                        alignment: Alignment.centerLeft,
+                        fontWeight: FontWeight.w700,
+                        fontSize: AppSize.s24,
+                      ),
+                    ),
+                    CustomText(
+                      text: " EGP",
+                      fontSize: AppSize.s12,
+                      color: primaryColor,
+                      alignment: Alignment.centerLeft,
+                    ),
+                  ],
+                ),
+                SizedBox(height: 8.h,),
+              ],
+            ),
+          ),
+        )),
+      ),
+    );
+  }
 
 
 }

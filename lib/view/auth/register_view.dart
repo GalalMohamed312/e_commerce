@@ -1,5 +1,7 @@
 
+import 'package:ecommerce/core/utils/values_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../core/view_model/auth_view_model.dart';
@@ -39,16 +41,16 @@ class RegisterView extends GetWidget<AuthViewModel> {
           key: _formKey,
           child: Column(
             children: [
-              const CustomText(
+              CustomText(
                 text: "Sign Up,",
-                fontSize: 30,
+                fontSize: 30.sp,
               ),
-              const SizedBox(
-                height: 30,
+              SizedBox(
+                height: AppSize.s24,
               ),
               CustomTextFormField(
                 text: 'Name',
-                hint: 'Pesa',
+                hint: 'Galal',
                 onSave: (value) {
                   controller.name = value;
                 },
@@ -58,12 +60,12 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   }
                 },
               ),
-              const SizedBox(
-                height: 30,
+               SizedBox(
+                height: AppSize.s24,
               ),
               CustomTextFormField(
                 text: 'Email',
-                hint: 'iamdavid@gmail.com',
+                hint: 'galal123@gmail.com',
                 onSave: (value) {
                   controller.email = value;
                 },
@@ -73,8 +75,8 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   }
                 },
               ),
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: AppSize.s24,
               ),
               CustomTextFormField(
                 text: 'Password',
@@ -88,8 +90,8 @@ class RegisterView extends GetWidget<AuthViewModel> {
                   }
                 },
               ),
-              const SizedBox(
-                height: 15,
+              SizedBox(
+                height: AppSize.s24,
               ),
               CustomButton(
                 onPress: () {
@@ -101,8 +103,8 @@ class RegisterView extends GetWidget<AuthViewModel> {
                 },
                 text: 'SIGN Up',
               ),
-              const SizedBox(
-                height: 40,
+              SizedBox(
+                height: AppSize.s24,
               ),
             ],
           ),

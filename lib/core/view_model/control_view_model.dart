@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 
 import '../../view/cart_view.dart';
 import '../../view/home_view.dart';
-import '../../view/profile_view.dart';
+import '../../view/profile/profile_view.dart';
 
 class ControlViewModel extends GetxController {
   int _navigatorValue = 0;

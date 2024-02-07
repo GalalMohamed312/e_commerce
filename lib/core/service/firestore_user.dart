@@ -14,4 +14,8 @@ class FireStoreUser {
   Future<DocumentSnapshot> getUserFromFireStore (String uid)async{
     return await _userCollectionRef.doc(uid).get();
   }
+
+  Future<void> updateUserFromFireStore (UserModel userModel)async{
+    return await _userCollectionRef.doc(userModel.userId).update(userModel.toJson());
+  }
 }

@@ -1,4 +1,5 @@
 import 'package:ecommerce/core/view_model/home_view_model.dart';
+import 'package:ecommerce/view/auth/login_view.dart';
 import 'package:ecommerce/view/control_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       // Use builder only if you need to use library outside ScreenUtilInit context
       builder: (_, child) {
-        Color statusBarColor = Colors.white;
+        Color statusBarColor = Colors.white.withOpacity(0.2);
         return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           initialBinding: Binding(),
@@ -47,7 +48,7 @@ class MyApp extends StatelessWidget {
                 statusBarIconBrightness:
                     Brightness.dark // Customize the status bar brightness
                 ),
-            child: ControlView(),
+            child: LoginView(),
           ),
           theme: ThemeData(
             fontFamily: 'SourceSans',

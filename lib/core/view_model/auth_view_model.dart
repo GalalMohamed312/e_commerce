@@ -1,5 +1,4 @@
 
-import 'dart:developer';
 
 import 'package:ecommerce/core/service/local_database/local_storage_shared_prefs.dart';
 import 'package:ecommerce/view/control_view.dart';
@@ -17,7 +16,7 @@ class AuthViewModel extends GetxController {
   final GoogleSignIn _googleSignIn = GoogleSignIn(scopes: ['email']);
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  String? email, password, name;
+  String? email, password, name,pic="";
 
   final Rx<User?> _user = Rx<User?>(null);
 
@@ -116,7 +115,7 @@ class AuthViewModel extends GetxController {
       userId: user.user!.uid,
       email: user.user?.email,
       name: name ?? user.user!.displayName,
-      pic: '',
+      pic:pic ?? "",
     );
     await FireStoreUser().addUserToFireStore(userModel);
     setUser(userModel);
